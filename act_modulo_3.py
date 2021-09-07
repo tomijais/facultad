@@ -31,7 +31,7 @@ porcentajeHotel8 = 0
 porcentajeHotel9 = 0
 porcentajeHotel10 = 0
 
-while contador <= 1:
+while contador <= 10:
     nombre_actual = input("Ingrese el nombre de la ciudad de la filial: ")
     total_actual = int(input("Ingrese la capacidad total del hotel (en cuanto a huéspedes: "))
     habitaciones_actual = int(input("Ingrese la cantidad de habitaciones: "))
@@ -68,16 +68,16 @@ while contador <= 1:
 
     contador = contador + 1
 
-print("Cantidad de huéspedes que puede alojar toda la cadena de hoteles: {cantidad_huespedes_total}")
-print("El nombre de la ciudad con la mayor cantidad de habitaciones es: {nombre_mas_habitaciones} con {cantidad_mas_habitaciones}")
+print(f"Cantidad de huéspedes que puede alojar toda la cadena de hoteles: {cantidad_huespedes_total}")
+print(f"El nombre de la ciudad con la mayor cantidad de habitaciones es: {nombre_mas_habitaciones} con {cantidad_mas_habitaciones}")
 
-print("El porcentaje de ocupacion del hotel 1 es de: {porcentajeHotel1}")
-print("El porcentaje de ocupacion del hotel 2 es de: {porcentajeHotel2}")
-print("El porcentaje de ocupacion del hotel 3 es de: {porcentajeHotel3}")
-print("El porcentaje de ocupacion del hotel 4 es de: {porcentajeHotel4}")
-print("El porcentaje de ocupacion del hotel 5 es de: {porcentajeHotel5}")
-print("El porcentaje de ocupacion del hotel 6 es de: {porcentajeHotel6}")
-print("El porcentaje de ocupacion del hotel 7 es de: {porcentajeHotel7}")
-print("El porcentaje de ocupacion del hotel 8 es de: {porcentajeHotel8}")
-print("El porcentaje de ocupacion del hotel 9 es de: {porcentajeHotel9}")
-print("El porcentaje de ocupacion del hotel 10 es de: {porcentajeHotel10}")
+print(f"El porcentaje de ocupacion del hotel 1 es de: {porcentajeHotel1}")
+print(f"El porcentaje de ocupacion del hotel 2 es de: {porcentajeHotel2}")
+print(f"El porcentaje de ocupacion del hotel 3 es de: {porcentajeHotel3}")
+print(f"El porcentaje de ocupacion del hotel 4 es de: {porcentajeHotel4}")
+print(f"El porcentaje de ocupacion del hotel 5 es de: {porcentajeHotel5}")
+print(f"El porcentaje de ocupacion del hotel 6 es de: {porcentajeHotel6}")
+print(f"El porcentaje de ocupacion del hotel 7 es de: {porcentajeHotel7}")
+print(f"El porcentaje de ocupacion del hotel 8 es de: {porcentajeHotel8}")
+print(f"El porcentaje de ocupacion del hotel 9 es de: {porcentajeHotel9}")
+print(f"El porcentaje de ocupacion del hotel 10 es de: {porcentajeHotel10}")
