@@ -1,50 +1,38 @@
-numeros_multiplos_5 = []
+# En base a los conceptos vistos en el módulo, debés realizar el siguiente ejercicio: 
+
+# Cargar un arreglo con 12 números enteros. Mostrarlo y calcular:
+
+# El elemento máximo y mínimo.
+# Calcular el promedio de los elementos ubicados en posiciones pares.
+# Calcular la sumatoria de los elementos pares en posiciones impares.
+# Calcular la cantidad de numeros primos.
+
+def es_primo(num):
+    for i in range(2, num):
+        if num % i == 0:
+            return False
+    return True
+
+arr = [1,2,3,4,5,6,7,8,9,10,11,12]
+
+sum = 0
+
+cantidad_primos = 0
+
+for i in range(len(arr)):
+    if(i%2 != 0 and arr[i] == 0):
+        sum = sum + arr[i]
 
 
-def numeros_mas_grandes(array, cantidad):
-    newArr = array[:]
-    returnArray = []
-
-    for i in range(cantidad):
-
-        if(len(newArr) != 0):
-            numero_mas_grande=max(newArr)
-            returnArray.append(numero_mas_grande)
-            newArr.remove(max(newArr))
-        
-    print(array)
-    return returnArray
-
-def multiplos_de_10(array):
-    newArr = array[:]
-    returnArray = []
-
-    for i in array:
-
-        if(i % 10 != 0):
-            print(i)
-            returnArray.append(i)
-
-        if(len(returnArray) == 0):
-            return "No hay valores multiplos de 10"
-
-    return returnArray
+    if(es_primo(arr[i])):
+        cantidad_primos = cantidad_primos + 1
 
 
 
-numero = int(input("Ingrese un numero: "))
-while numero != 0:
-    if(numero % 5 == 0):
-        numeros_multiplos_5.append((numero))
-    numero = int(input("Ingrese un numero: "))
 
 
-maximos = numeros_mas_grandes(numeros_multiplos_5, 3)
+print(arr)
 
-
-
-multiplos = multiplos_de_10(numeros_multiplos_5)
-
-
-print(f"Los 3 primeros números más grandes: {maximos}")
-print(f"Los multiplos de 10 son: {multiplos}")
+print(f"El elemento minimo es: {min(arr)}")
+print(f"El elemento maximo es: {max(arr)}")
+print(f"La cantidad de numeros primos que hay es: {cantidad_primos}")
