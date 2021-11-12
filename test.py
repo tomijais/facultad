@@ -1,12 +1,7 @@
-suma=0
+ar = [1,10, 20, 50, 100]
 
-for i in range(0,10):
+for i in range(len(ar)):
+  print(ar[i])
 
-  a=int(input("Ingrese un numero"))
-
-suma=suma+a
-
-p=suma/10
-
-print(p)
-
+for i in ar:
+  print(i)
