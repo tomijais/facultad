@@ -65,12 +65,16 @@ def imprimir(arr_clientes, arr_bebidas, arr_precios, arr_litros_pedidos, arr_beb
 
     mas_ventas = cliente_mas_ventas(arr_clientes)
     promedio = calcular_promedio(arr_litros_pedidos, arr_precios, arr_bebida_pedida)
+    mas_vendido = sabor_mas_vendido(arr_bebidas, arr_bebida_pedida, arr_precios, arr_litros_pedidos)
+    menos_vendido = sabor_menos_vendido(arr_bebidas, arr_bebida_pedida, arr_precios, arr_litros_pedidos)
+    menos_vendido_pesos = sabor_menos_vendido_pesos(arr_bebidas, arr_bebida_pedida, arr_precios, arr_litros_pedidos)
 
     print(f"El cliente que tuvo mas ventas fue: {mas_ventas}")
     print(f"El promedio de facturado fue: ${promedio}")
     imprimir_porcentaje_cada_bebida(arr_bebidas, arr_litros_pedidos, arr_bebida_pedida)
-    sabor_mas_vendido(arr_bebidas, arr_bebida_pedida, arr_precios)
-
+    print(f"El sabor mas vendido fue: {mas_vendido}")
+    print(f"El sabor menos vendido fue: {menos_vendido}")
+    print(f"El sabor menos vendido en pesos fue: {menos_vendido_pesos}")
 
 def cliente_mas_ventas(arr_clientes):
 
@@ -89,7 +93,6 @@ def calcular_promedio(arr_litros_pedidos, arr_precios, arr_bebida_pedida):
     total = 0
     for i in range(len(arr_litros_pedidos)):
         bebida = arr_bebida_pedida[i]
-        print(bebida)
         total += arr_litros_pedidos[i] * arr_precios[bebida - 1]
     return total / len(arr_litros_pedidos)
 
@@ -111,14 +114,60 @@ def imprimir_porcentaje_cada_bebida(arr_bebidas, arr_litros_pedidos, arr_bebida_
         print(f"El porcentaje de {arr_bebidas[i]} vendidas en litros fue de {cantidad_litros_por_bebida[i] * 100 / cantidad_litros }%")
 
 
-def sabor_mas_vendido(arr_bebidas, arr_bebida_pedida, arr_precios):
+def sabor_mas_vendido(arr_bebidas, arr_bebida_pedida, arr_precios, arr_litros_pedidos):
     bebidas_pedidas = [0]*len(arr_bebidas)
+    litros_pedidos = [0]*len(arr_bebidas)
+    index_mayor = 0
 
     for i in range(len(arr_bebida_pedida)):
-        bebidas_pedidas[arr_bebida_pedida[i] - 1] += 1 * arr_precios[i]
+        bebidas_pedidas[arr_bebida_pedida[i] - 1] += 1
+        litros_pedidos[arr_bebida_pedida[i] - 1] += arr_litros_pedidos[i]
+
+    for i in range(len(bebidas_pedidas)):
+        bebidas_pedidas[i] = litros_pedidos[i] * arr_precios[i]
+
+    for i in range(len(bebidas_pedidas)):
+        if bebidas_pedidas[i] > bebidas_pedidas[index_mayor]:
+            index_mayor = i
+    
+    return arr_bebidas[index_mayor]
+
+def sabor_menos_vendido(arr_bebidas, arr_bebida_pedida, arr_precios, arr_litros_pedidos):
+    bebidas_pedidas = [0]*len(arr_bebidas)
+    litros_pedidos = [0]*len(arr_bebidas)
+    index_menor = 3
 
     print(bebidas_pedidas)
 
+    for i in range(len(arr_bebida_pedida)):
+        bebidas_pedidas[arr_bebida_pedida[i] - 1] += 1
+        litros_pedidos[arr_bebida_pedida[i] - 1] += arr_litros_pedidos[i]
+
+    print(litros_pedidos)
+
+    for i in range(len(litros_pedidos)):
+        if litros_pedidos[i] < litros_pedidos[index_menor] and litros_pedidos[i] != 0:
+            index_menor = i
+
+    return arr_bebidas[index_menor]
+
+def sabor_menos_vendido_pesos(arr_bebidas, arr_bebida_pedida, arr_precios, arr_litros_pedidos):
+    bebidas_pedidas = [0]*len(arr_bebidas)
+    litros_pedidos = [0]*len(arr_bebidas)
+    index_menor = 3
+
+    for i in range(len(arr_bebida_pedida)):
+        bebidas_pedidas[arr_bebida_pedida[i] - 1] += 1
+        litros_pedidos[arr_bebida_pedida[i] - 1] += arr_litros_pedidos[i]
+
+    for i in range(len(bebidas_pedidas)):
+        bebidas_pedidas[i] = litros_pedidos[i] * arr_precios[i]
+
+    for i in range(len(bebidas_pedidas)):
+        if bebidas_pedidas[i] < bebidas_pedidas[index_menor]  and bebidas_pedidas[i] != 0:
+            index_menor = i
+    
+    return arr_bebidas[index_menor]
 
 ultima_factura = 0
 arr_factura = []
