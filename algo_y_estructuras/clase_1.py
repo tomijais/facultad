@@ -12,11 +12,10 @@ total_primos = 0
 cantidad_primos = 0
 
 while(numero > 0):
-    print(numero)
-    numero = int(input("Ingrese un numero entero: "))
     if(isPrime(numero)):
         total_primos += numero
         cantidad_primos += 1
+    numero = int(input("Ingrese un numero entero: "))
 
 
 if(cantidad_primos > 0):
