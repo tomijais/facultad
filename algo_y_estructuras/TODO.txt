@@ -1,2 +1,4 @@
 Guia 1: EJ 6
 Guia 2: EJ 3
+
+Guia 4: 15, 17
