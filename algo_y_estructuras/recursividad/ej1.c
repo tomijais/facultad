@@ -20,5 +20,3 @@ int main()
     invertir(num);
     return 0;
 }
-
-// Ingresar un texto caracter a caracter terminado en punto o enter y mostrar el texto invertido en forma recursiva.
