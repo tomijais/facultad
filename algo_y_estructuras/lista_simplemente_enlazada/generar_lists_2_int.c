@@ -9,6 +9,12 @@ typedef struct numeros
     struct numeros *sig;
 } nodoN;
 
+typedef struct promedio
+{
+    float prom;
+    struct promedio *sig;
+} nodoP;
+
 void cargar(nodoN *h)
 {
     printf("Ingrese a: ");
@@ -34,6 +40,26 @@ void mostrar(nodoN *h)
         printf("\n%d", h->a);
         printf("\t%d", h->b);
         mostrar(h->sig);
+    }
+}
+
+void cargar2(nodoN *h, nodoP *m)
+{
+    if (h->sig != NULL)
+    {
+        m->prom = (h->a + h->b) / 2;
+
+        m->sig = (nodoP *)malloc(sizeof(nodoP));
+        cargar2(h->sig, m->sig);
+    }
+}
+
+void mostrar2(nodoP *h)
+{
+    if (h->sig != NULL)
+    {
+        printf("\n%f", h->prom);
+        mostrar2(h->sig);
     }
 }
 
@@ -106,8 +132,10 @@ int main()
 {
 
     nodoN *p = NULL, *q = NULL;
+    nodoP *r = NULL;
     p = (nodoN *)malloc(sizeof(nodoN));
     q = (nodoN *)malloc(sizeof(nodoN));
+    r = (nodoP *)malloc(sizeof(nodoP));
     cargar(p);
     mostrar(p);
     printf("\nLa cantidad de nodos donde el primero numero es multiplo del segundo es: %d", cantidad_nodos_multiplos(p));
@@ -119,4 +147,8 @@ int main()
         printf("\nLa lista donde los 2 numeros suman 20 es: %d", cantidad_nodos_multiplos(p));
         mostrar(q);
     }
+
+    cargar2(p, r);
+    printf("\nLa lista de los promedios es: ");
+    mostrar2(r);
 }
