@@ -1,3 +1,3 @@
-Primer Parcial: Listas simplemente enlazadas (punteros y recursividad)
+Primer Parcial: Listas simplemente enlazadas (punteros y recursividad).
 
-Primer Parcial: Pilas, Colas y Arboles
+Primer Parcial: Pilas, Colas y Arboles.
