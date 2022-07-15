@@ -1,0 +1,12 @@
+{
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#620205",
+        "titleBar.activeBackground": "#8A0307",
+        "titleBar.activeForeground": "#FFFBFB"
+    },
+    "files.associations": {
+        "stdio.h": "c",
+        "stdlib.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
+}
