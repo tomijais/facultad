@@ -40,9 +40,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "id=" + id +
-                ", name='" + name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", DNI='" + DNI + '\'';
+        return " ID: " + id + " Nombre: " + name + " Apellido: " + last_name + " DNI: " + DNI;
     }
 }
