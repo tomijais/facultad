@@ -26,10 +26,18 @@ public class FormularioUsuario extends JPanel {
 
     JButton jButtonGuardar;
 
-    public  FormularioUsuario(){
+    PanelManager panel;
+
+
+    public FormularioUsuario(PanelManager panelPrincipal) {
+        panel = panelPrincipal;
+        armarPanel();
+    }
+
+    public void armarPanel(){
 
         formularioUsuario = new JPanel();
-        formularioUsuario.setLayout(new GridLayout(3,2));
+        formularioUsuario.setLayout(new GridLayout(3,1));
 
         jLabelNombre = new JLabel("Nombre");
         jTextFieldNombre = new JTextField(20);
@@ -53,6 +61,10 @@ public class FormularioUsuario extends JPanel {
 
         formularioUsuario.add(jButtonGuardar);
 
+        add(formularioUsuario, BorderLayout.PAGE_START);
+
+
+
         jButtonGuardar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -62,7 +74,13 @@ public class FormularioUsuario extends JPanel {
                 usuario.setLast_name(jTextFieldApellido.getText());
                 usuario.setDNI(jTextFieldDNI.getText());
 
+                jTextFieldNombre.setText("");
+                jTextFieldApellido.setText("");
+                jTextFieldDNI.setText("");
+
+
                 try {
+                    serviceUsuario = new ServiceUsuario();
                     serviceUsuario.guardarUsuario(usuario);
                 } catch (ServiceExeption ex) {
                     throw new RuntimeException(ex);
@@ -70,6 +88,7 @@ public class FormularioUsuario extends JPanel {
             }
         });
 
+        formularioUsuario.setVisible(true);
         formularioUsuario.validate();
     }
 

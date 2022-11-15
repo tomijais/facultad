@@ -1,32 +1,17 @@
 package com.company.gui;
 
+import com.company.entidades.Usuario;
+import com.company.service.ServiceExeption;
+import com.company.service.ServiceUsuario;
+
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
 
     public static void main(String[] args){
-        FormularioUsuario formularioUsuario = new FormularioUsuario();
-        JFrame ventana = new JFrame();
-        ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        ventana.setContentPane(formularioUsuario);
-        ventana.setSize(500,500);
-        ventana.setResizable(false);
-        ventana.validate();
-        ventana.setVisible(true);
-
-
+        PanelManager panel = new PanelManager(); //Crea la GUI
 
     }
 }
-
-
-/*
-*
-*     public static void main(String[] args){
-        PanelManager panel = new PanelManager(1);
-
-        Usuario usuario = new Usuario();
-        panel.mostrarFormularioUsuario(usuario);
-
-
-    }*/
