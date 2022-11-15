@@ -140,7 +140,7 @@ public class DAOUsuario implements IDAO<Usuario>{
             Class.forName(DB_JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, DB_USER
                     , DB_PASSWORD);
-            preparedStatement = connection.prepareStatement("SELECT FROM USERS ");
+            preparedStatement = connection.prepareStatement("SELECT ID as ID, NAME, LAST_NAME, DNI FROM USERS ");
 
             ResultSet rs = preparedStatement.executeQuery();
 
@@ -157,7 +157,9 @@ public class DAOUsuario implements IDAO<Usuario>{
         }
         finally {
             try {
-                preparedStatement.close();
+                if(preparedStatement != null){
+                    preparedStatement.close();
+                }
             }catch (SQLException e){
                 throw new DAOExeption(e.getMessage());
             }

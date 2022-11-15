@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws ServiceExeption {
         PanelManager panel = new PanelManager(); //Crea la GUI
 
     }

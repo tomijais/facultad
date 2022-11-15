@@ -1,5 +1,6 @@
 package com.company.gui;
 
+import com.company.service.ServiceExeption;
 import com.company.service.ServiceUsuario;
 
 import javax.swing.*;
@@ -15,7 +16,7 @@ public class PanelManager {
 
     FormularioUsuario formularioUsuario;
 
-    public PanelManager(){
+    public PanelManager() throws ServiceExeption {
         ventana = new JFrame("Home Banking");
         ventana.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -23,6 +24,7 @@ public class PanelManager {
         mostrarFormularioUsuario(formularioUsuario,BorderLayout.NORTH);
 
         ventana.setVisible(true);
+        ventana.setResizable(false);
         ventana.pack();
 
     }
