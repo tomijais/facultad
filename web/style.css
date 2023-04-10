@@ -1,0 +1,27 @@
+form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pair {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    margin-right: 10px;
+  }
+  
+
+  hr{
+    width: 100%;
+  }
+
+  button{
+    width: 10%;
+  }
+  /* input {
+    flex-grow: 1;
+  } */
+  
