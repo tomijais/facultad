@@ -1,6 +1,9 @@
 {
-  "python.formatting.provider": "black",
+  "python.formatting.provider": "none",
   "files.associations": {
     "stdio.h": "c"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
   }
 }
