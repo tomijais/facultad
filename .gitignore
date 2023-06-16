@@ -1,2 +1,6 @@
 *.out
 .venv
+
+node_modules
+
+*.zip
