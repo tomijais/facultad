@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lista de usuarios</title>
+  <style>
+    body {
+      background-color: #f1f1f1;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      width: 50%;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .no-users {
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de usuarios</h1>
+  {{#if users.length}}
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Nombre de Usuario</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each users}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.username}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p class="no-users">No se encontraron usuarios.</p>
+  {{/if}}
+</body>
+</html>

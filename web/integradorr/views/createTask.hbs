@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Crear tarea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            padding: 8px;
+            border-radius: 3px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Crear tarea</h1>
+    <form id="createTaskForm">
+        <div>
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" rows="4" required></textarea>
+        </div>
+        <div>
+            <input type="submit" value="Crear tarea">
+        </div>
+    </form>
+    <script>
+        const jwt = localStorage.getItem('jwt');
+
+        const form = document.getElementById('createTaskForm');
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Evitar envío del formulario por defecto
+
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+
+            fetch('/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwt}`
+                },
+                body: JSON.stringify({ title, description })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/tasks';
+                    } else {
+                        throw new Error('Error al crear la tarea');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error en la solicitud:', error);
+                });
+        });
+    </script>
+</body>
+
+</html>

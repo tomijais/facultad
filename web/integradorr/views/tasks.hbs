@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de tareas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .button {
+            padding: 8px;
+            border-radius: 3px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <button class="button" onclick="location.href='/tasks/create'" type="button">Crear tarea</button>
+        <button class="button" onclick="logout()" type="button">Cerrar sesión</button>
+
+    </div>
+    <h1>Lista de tareas</h1>
+    <table>
+        <tr>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Acciones</th>
+        </tr>
+        {{#each tasks}}
+        <tr>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>
+            <td>
+                <form action="/tasks/update/{{this._id}}" method="get">
+                    <button class="button" type="submit">Actualizar</button>
+                </form>
+                <button class="button" onclick="deleteTask('{{this._id}}')">Eliminar</button>
+
+
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+    <script>
+        const jwt = localStorage.getItem('jwt');
+
+        function deleteTask(taskId) {
+            if (confirm('¿Estás seguro de que quieres eliminar esta tarea?')) {
+                fetch(`/tasks/delete/${taskId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${jwt}`
+                    }
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            window.location.reload()
+                        } else {
+                            throw new Error('Error al eliminar la tarea');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error en la solicitud:', error);
+                    });
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('jwt');
+            // Redirigir al usuario a la página de inicio de sesión o a donde corresponda
+            window.location.href = '/login';
+        }
+    </script>
+
+</body>
+
+</html>

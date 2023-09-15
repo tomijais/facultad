@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Actualizar tarea</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            padding: 8px;
+            border-radius: 3px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Actualizar tarea</h1>
+    <form action="/tasks/update/{{task._id}}" method="post">
+        <div>
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" value="{{task.title}}" required>
+        </div>
+        <div>
+            <label for="description">Descripción:</label>
+            <textarea id="description" name="description" rows="4" required>{{task.description}}</textarea>
+        </div>
+        <div>
+            <input type="submit" value="Actualizar tarea">
+        </div>
+    </form>
+</body>
+
+</html>
