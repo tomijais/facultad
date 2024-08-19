@@ -1,152 +1,130 @@
-WIDTH, HEIGHT = 10, 10
-city = [['.' for _ in range(WIDTH)] for _ in range(HEIGHT)]
-
 BUILDING_COSTS = {
-    'h': 1000,  # House
-    's': 2000,  # Shop
-    'f': 3000,  # Factory
+    'l': 1000,  # House
+    'm': 2000,  # Shop
+    'h': 3000,  # Factory
     'r': 500    # Road
 }
 
-player_money = 15000
+class Building:
+    def __init__(self, kind):
+        self.kind = kind.lower()
+        self.cost = BUILDING_COSTS[self.kind]
+        self.is_active = False  # Active when next to a road
 
-def print_city():
-    print('\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n')
-    print(f"Your current balance: ${player_money}")
-    for row in city:
-        print(' '.join(row))
-    print()
+    def activate(self):
+        self.is_active = True
 
-def place_building(building):
-    global player_money
+    def deactivate(self):
+        self.is_active = False
 
-    building = building.lower()  # Convert building to lowercase
+class City:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+        self.grid = [['.' for _ in range(width)] for _ in range(height)]
 
-    if player_money < BUILDING_COSTS[building]:
-        print(f"Not enough money to place {building}. You need {BUILDING_COSTS[building] - player_money} more.")
-        return
+    def print_city(self, player_money):
+        print(f"Your current balance: ${player_money}")
+        for row in self.grid:
+            print(' '.join(row))
+        print()
 
-    while True:
-        x = int(input(f"Enter X coordinate (0-{WIDTH-1}) for {building}: "))
-        y = int(input(f"Enter Y coordinate (0-{HEIGHT-1}) for {building}: "))
-        
-        if 0 <= x < WIDTH and 0 <= y < HEIGHT and city[y][x] == '.':
-            city[y][x] = building
-            player_money -= BUILDING_COSTS[building]
-            # Update the building case based on its adjacency to a road
-            update_building_case(x, y)
-            break
-        else:
-            print("Invalid location. Try again.")
+    def place_building(self, x, y, building):
+        self.grid[y][x] = building.kind.upper() if building.is_active else building.kind
 
-def remove_building():
-    global player_money
+    def remove_building(self, x, y):
+        self.grid[y][x] = '.'
 
-    x = int(input(f"Enter X coordinate (0-{WIDTH-1}) of the building to remove: "))
-    y = int(input(f"Enter Y coordinate (0-{HEIGHT-1}) of the building to remove: "))
+    def update_building_cases(self):
+        for y in range(self.height):
+            for x in range(self.width):
+                building = self.grid[y][x].lower()
+                if building in BUILDING_COSTS:
+                    if self.is_adjacent_to_road(x, y):
+                        self.grid[y][x] = building.upper()
+                    else:
+                        self.grid[y][x] = building.lower()
 
-    building = city[y][x].lower()
+    def is_adjacent_to_road(self, x, y):
+        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < self.width and 0 <= ny < self.height:
+                if self.grid[ny][nx].lower() == 'r':
+                    return True
+        return False
 
-    if building in BUILDING_COSTS:
-        refund = BUILDING_COSTS[building] // 2
-        player_money += refund
-        city[y][x] = '.'
+class Player:
+    def __init__(self, starting_money):
+        self.money = starting_money
 
-        # If we're removing a road
-        if building == 'r':
-            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-                nx, ny = x + dx, y + dy
+    def can_afford(self, building):
+        return self.money >= building.cost
 
-                # If we find an uppercase building
-                if 0 <= nx < WIDTH and 0 <= ny < HEIGHT and city[ny][nx].isupper():
+    def make_payment(self, amount):
+        self.money -= amount
 
-                    # Check if this building is still adjacent to a road
-                    if not is_adjacent_to_road(nx, ny):
-                        city[ny][nx] = city[ny][nx].lower()
+    def receive_money(self, amount):
+        self.money += amount
 
-        print(f"{building.upper()} removed. You got a refund of ${refund}.")
-    else:
-        print("There's no building at that location. Please try again.")
+    def collect_rent(self, city):
+        rent = sum(city.grid[y].count(building.upper()) * (BUILDING_COSTS[building.lower()] * 0.10) for y in range(city.height) for building in ['l', 'm', 'h'])
+        self.receive_money(rent)
+        print(f"Collected ${rent} in rent!")
 
+class Game:
+    def __init__(self, width, height, starting_money):
+        self.city = City(width, height)
+        self.player = Player(starting_money)
 
+    def main_loop(self):
+        while True:
+            self.city.print_city(self.player.money)
+            print("Choose an action:")
+            print("1. Place Low Urban Zone (L) - $1000")
+            print("2. Place Medium Urban Zone (M) - $2000")
+            print("3. Place High Urban Zone (H) - $3000")
+            print("4. Place Road (R) - $500")
+            print("5. Remove Something")
+            print("6. Skip Turn")
+            print("9. Quit")
+            choice = input("> ")
 
-def update_building_case(x, y):
-    # Check the surrounding cells (above, below, left, right)
-    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-        nx, ny = x + dx, y + dy
-        if 0 <= nx < WIDTH and 0 <= ny < HEIGHT:
-            # If the adjacent cell is a road and the current cell is a building, uppercase it
-            if city[ny][nx] == 'r' and city[y][x] in ['h', 's', 'f']:
-                city[y][x] = city[y][x].upper()
-            # If the adjacent cell is a building and the current cell is a road, uppercase the building
-            elif city[y][x] == 'r' and city[ny][nx] in ['h', 's', 'f']:
-                city[ny][nx] = city[ny][nx].upper()
+            if choice in ['1', '2', '3', '4']:
+                building_kind = ['l', 'm', 'h', 'r'][int(choice) - 1]
+                building = Building(building_kind)
+                if self.player.can_afford(building):
+                    x = int(input(f"Enter X coordinate (0-{self.city.width-1}) for {building.kind}: "))
+                    y = int(input(f"Enter Y coordinate (0-{self.city.height-1}) for {building.kind}: "))
+                    if 0 <= x < self.city.width and 0 <= y < self.city.height and self.city.grid[y][x] == '.':
+                        self.city.place_building(x, y, building)
+                        self.player.make_payment(building.cost)
+                        self.city.update_building_cases()
+                    else:
+                        print("Invalid location. Try again.")
+                else:
+                    print(f"Not enough money to place {building.kind}. You need ${building.cost - self.player.money} more.")
+            elif choice == '5':
+                x = int(input(f"Enter X coordinate (0-{self.city.width-1}) of the building to remove: "))
+                y = int(input(f"Enter Y coordinate (0-{self.city.height-1}) of the building to remove: "))
+                if self.city.grid[y][x].lower() in BUILDING_COSTS:
+                    building_kind = self.city.grid[y][x].lower()
+                    refund = BUILDING_COSTS[building_kind] // 2
+                    self.city.remove_building(x, y)
+                    self.player.receive_money(refund)
+                    self.city.update_building_cases()
+                    print(f"{building_kind.upper()} removed. You got a refund of ${refund}.")
+                else:
+                    print("There's no building at that location. Please try again.")
+            elif choice == '6':
+                print('Skipping turn...')
+            elif choice == '9':
+                print("Thanks for playing!")
+                break
+            else:
+                print("Invalid choice. Try again.")
 
-def is_adjacent_to_road(x, y):
-    # Check the surrounding cells (above, below, left, right)
-    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
-        nx, ny = x + dx, y + dy
-        if 0 <= nx < WIDTH and 0 <= ny < HEIGHT:
-            if city[ny][nx] == 'r':
-                return True
-    return False
-
-def collect_rent():
-    global player_money
-    
-    # Initialize the counts
-    house_count = 0
-    shop_count = 0
-    factory_count = 0
-
-    # Count the number of each building type adjacent to roads for each row
-    for row in city:
-        house_count += row.count('H')
-        shop_count += row.count('S')
-        factory_count += row.count('F')
-
-    # Calculate the total rent
-    total_rent = (house_count * BUILDING_COSTS['h'] * 0.10 +
-                  shop_count * BUILDING_COSTS['s'] * 0.10 +
-                  factory_count * BUILDING_COSTS['f'] * 0.10)
-    
-    player_money += total_rent
-    print(f"Collected ${total_rent} in rent!")
-
-
-
-def main():
-    global player_money
-
-    print_city()
-
-    while True:
-        print("Choose an action:")
-        print("1. Place House (H) - $1000")
-        print("2. Place Shop (S) - $2000")
-        print("3. Place Factory (F) - $3000")
-        print("4. Place Road (R) - $500")
-        print("5. Remove Building")
-        print("6. Skip Turn")
-        print("9. Quit")
-        choice = input("> ")
-
-        if choice in ['1', '2', '3', '4']:
-            building = ['h', 's', 'f', 'r'][int(choice) - 1]  # Ensure lowercase
-            place_building(building)
-        elif choice == '5':
-            remove_building()
-        elif choice == '6':
-            print('Skipping turn...')
-        elif choice == '9':
-            print("Thanks for playing!")
-            break
-        else:
-            print("Invalid choice. Try again.")
-        
-        print_city()
-        collect_rent()  # Add this line to collect rent at the start of each iteration
-
+            self.player.collect_rent(self.city)
 
 if __name__ == "__main__":
-    main()
+    game = Game(10, 10, 15000)
+    game.main_loop()
