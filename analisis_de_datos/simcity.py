@@ -67,7 +67,11 @@ class Player:
         self.money += amount
 
     def collect_rent(self, city):
+<<<<<<< HEAD
         rent = sum(city.grid[y].count(building.upper()) * (BUILDING_COSTS[building.lower()] * 0.10) for y in range(city.height) for building in ['l', 'm', 'h'])
+=======
+        rent = sum(city.grid[y].count(building.upper()) * (BUILDING_COSTS[building.lower()] * 0.10) for y in range(city.height) for building in ['h', 's', 'f'])
+>>>>>>> 997e5275bb9ca54c4b2f9ea0906494dfa1096c95
         self.receive_money(rent)
         print(f"Collected ${rent} in rent!")
 
@@ -80,17 +84,29 @@ class Game:
         while True:
             self.city.print_city(self.player.money)
             print("Choose an action:")
+<<<<<<< HEAD
             print("1. Place Low Urban Zone (L) - $1000")
             print("2. Place Medium Urban Zone (M) - $2000")
             print("3. Place High Urban Zone (H) - $3000")
             print("4. Place Road (R) - $500")
             print("5. Remove Something")
+=======
+            print("1. Place House (H) - $1000")
+            print("2. Place Shop (S) - $2000")
+            print("3. Place Factory (F) - $3000")
+            print("4. Place Road (R) - $500")
+            print("5. Remove Building")
+>>>>>>> 997e5275bb9ca54c4b2f9ea0906494dfa1096c95
             print("6. Skip Turn")
             print("9. Quit")
             choice = input("> ")
 
             if choice in ['1', '2', '3', '4']:
+<<<<<<< HEAD
                 building_kind = ['l', 'm', 'h', 'r'][int(choice) - 1]
+=======
+                building_kind = ['h', 's', 'f', 'r'][int(choice) - 1]
+>>>>>>> 997e5275bb9ca54c4b2f9ea0906494dfa1096c95
                 building = Building(building_kind)
                 if self.player.can_afford(building):
                     x = int(input(f"Enter X coordinate (0-{self.city.width-1}) for {building.kind}: "))
