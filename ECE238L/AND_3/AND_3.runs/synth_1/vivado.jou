@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2020.2 (64-bit)
+# SW Build 3064766 on Wed Nov 18 09:12:45 MST 2020
+# IP Build 3064653 on Wed Nov 18 14:17:31 MST 2020
+# Start of session at: Tue Feb  4 14:54:46 2025
+# Process ID: 22992
+# Current directory: C:/Users/tjais/AND_3/AND_3.runs/synth_1
+# Command line: vivado.exe -log AND_3.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source AND_3.tcl
+# Log file: C:/Users/tjais/AND_3/AND_3.runs/synth_1/AND_3.vds
+# Journal file: C:/Users/tjais/AND_3/AND_3.runs/synth_1\vivado.jou
+#-----------------------------------------------------------
+source AND_3.tcl -notrace
