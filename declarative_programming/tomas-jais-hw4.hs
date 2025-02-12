@@ -77,7 +77,7 @@ countLeaves (Leaf a) = 1
 countLeaves (Node l r) = countLeaves l + countLeaves r
 
 balanced :: Tree a -> Bool
-balanced (Node l r)= abs diff >= 1
+balanced (Node l r) = abs diff >= 1
   where
       diff = countLeaves l - countLeaves r
 
